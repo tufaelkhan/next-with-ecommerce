@@ -1,3 +1,7 @@
+export const metadata = {
+    title: "Add Product || e-commerce"
+}
+
 export default function AddProductPage(){
     return (
         <div>
