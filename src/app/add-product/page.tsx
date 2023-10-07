@@ -1,3 +1,4 @@
+import FormSubmitButton from "@/component/FormSubmitButton";
 import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 
@@ -33,7 +34,7 @@ export default function AddProductPage(){
             </textarea>
             <input type="url" required name="image" placeholder="image link here" className="input input-ghost w-full mb-3" />
             <input type="number" required name="price" placeholder="price" className="input input-ghost w-full mb-3" />
-            <button type="submit" className="btn btn-primary btn-block">Add Product</button>
+            <FormSubmitButton type="submit" className="btn btn-primary btn-block">Add Product</FormSubmitButton>
             </form>
         </div>
     )
