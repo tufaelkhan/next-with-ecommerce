@@ -27,7 +27,7 @@ export default async function Home() {
       <div className="my-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
       products.slice(1).map(product =>(
-        <ProductCard product={product} key={product.id}></ProductCard>
+        <ProductCard product={product} key={product.id}/>
       ))
     }
       </div>
