@@ -7,8 +7,9 @@ import formatPrice from "@/lib/Format"
 
 interface CartEntryProps{
     cartItem: CartItemWithProduct,
+    setProductQuantity: ( productId: string, quantity: number) => Promise<vaid>
 }
-export default function CartEntry({cartItem : {product, quantity}}: CartEntryProps){
+export default function CartEntry({cartItem : {product, quantity}, setProductQuantity }: CartEntryProps){
     const quantityOptions : JSX.Element[] = []
     for (let i = 1; i <= 99; i++){
         quantityOptions.push(<option value={i} key={i}>{i}</option>)
@@ -26,7 +27,7 @@ export default function CartEntry({cartItem : {product, quantity}}: CartEntryPro
                     Quantity:
                     <select className="select select-bordered w-full max-w-[800px]" defaultValue={quantity}
                     onChange={e => {
-                        
+                        const newQuantity = parseInt(e.currentTarget.value)
                     }}
                     >{quantityOptions}</select>
                 </div>

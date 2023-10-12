@@ -1,5 +1,6 @@
 import { getCart } from "@/lib/db/cart"
 import CartEntry from "./CartEntry";
+import { setProductQuantity } from "./actions";
 
 export const metadata = {
     title:"your cart - e-commerce",
@@ -12,7 +13,7 @@ export default async function CartPage() {
         <div>
             <h2 className="text-3xl font-bold mb-5 ">shopping cart</h2>
             {
-                cart?.items.map(cartItem => <CartEntry cartItem={cartItem} key={cartItem.id}></CartEntry>)
+                cart?.items.map(cartItem => <CartEntry cartItem={cartItem} key={cartItem.id} setProductQuantity={setProductQuantity}></CartEntry>)
             }
         </div>
     )
