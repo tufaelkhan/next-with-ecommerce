@@ -34,7 +34,9 @@ export default function CartEntry({cartItem : {product, quantity}, setProductQua
                             await setProductQuantity(product.id, newQuantity)
                         })
                     }}
-                    >{quantityOptions}</select>
+                    >
+                        <option value={0}>0 (Remove)</option>
+                        {quantityOptions}</select>
                 </div>
                 <div className="flex items-center gap-2">
                     Total: {formatPrice(product.price * quantity)}
