@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from './Navbar/Navbar'
 import Footer from './Footer'
+import { SessionProvider } from "next-auth/react"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <SessionProvider>
         <Navbar/>
         <main className='p-3 max-w-7xl m-auto min-w-[300px]'>
         {children}
         </main>
         <Footer/>
+        </SessionProvider>
         </body>
     </html>
   )
