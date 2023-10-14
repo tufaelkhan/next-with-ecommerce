@@ -22,18 +22,20 @@ export async function getCart( ): Promise<ShoppingCart | null> {
     let cart: CartWithProduct | null = null
 
     if(session){
-
+        cart = await prisma.cart.findFirst({
+            where: {userId: session.user.id},
+            include: {items: {include: {product: true}}}
+        })
     }else{
-        
+        const localCartId = cookies().get("localCartId")?.value;
+        cart = localCartId ?
+        await prisma.cart.findUnique({
+            where: {id: localCartId},
+            include: {items: {include: {product: true}}}
+        })
+        : null;
     }
 
-    const localCartId = cookies().get("localCartId")?.value;
-    cart = localCartId ?
-    await prisma.cart.findUnique({
-        where: {id: localCartId},
-        include: {items: {include: {product: true}}}
-    })
-    : null;
 
     if(!cart){
         return null;
