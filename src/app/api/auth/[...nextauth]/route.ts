@@ -13,7 +13,13 @@ export const authOptions: NextAuthOptions = {
             clientId: env.GOOGEL_CLIENT_ID,
             clientSecret: env.GOOGEL_CLIENT_SECRET
         })
-    ]
+    ],
+    callback: {
+        session({session, user}){
+            session.user.id = user.id;
+            return session;
+        },
+    }
 }
 
 const handler = NextAuth(authOptions)

@@ -1,6 +1,8 @@
 import { prisma } from "./prisma";
 import {cookies} "next/dist/client/components/headers"
 import {Cart, Prisma} from "@prisma/client"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServersession } from "next-auth";
 
 export type CartWithProduct = Prisma.CartGetPayload<{
     include: {items: {include: {product: true}}}
@@ -16,8 +18,17 @@ export type ShoppingCart = Cart  & {
 }
 
 export async function getCart( ): Promise<ShoppingCart | null> {
+    const session = await getServerSession(authOptions)
+    let cart: CartWithProduct | null = null
+
+    if(session){
+
+    }else{
+        
+    }
+
     const localCartId = cookies().get("localCartId")?.value;
-    const cart = localCartId ?
+    cart = localCartId ?
     await prisma.cart.findUnique({
         where: {id: localCartId},
         include: {items: {include: {product: true}}}
@@ -34,12 +45,20 @@ export async function getCart( ): Promise<ShoppingCart | null> {
     }
 }
 
-export async function createCart( ): Promise {
-    const newCart = await prisma.cart.create({
-        data:{}
-    })
-    
-    cookies().set("localCartId", newCart.id)
+export async function createCart( ): Promise<ShoppingCart> {
+    const session = await getServerSession(authOptions)
+    let newCart: Cart;
+
+    if(session){
+        newCart = await prisma.cart.create({
+            data: { userId: session.user.id}
+        })
+    }else{
+        newCart = await prisma.cart.create({
+            data:{}
+        })    
+        cookies().set("localCartId", newCart.id)
+    }
 
     return {
         ...newCart,
