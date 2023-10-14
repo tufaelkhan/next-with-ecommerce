@@ -69,3 +69,39 @@ export async function createCart( ): Promise<ShoppingCart> {
         subtotal: 0,
     }
 }
+
+export async function margeAnonymousCartIntoUserCart(userId: string) {
+    const localCartId = cookies().get("localCartId")?.value;
+
+    const locatCart = localCartId ?
+        await prisma.cart.findUnique({
+            where: {id: localCartId},
+            include: {items: true}
+        })
+        : null;
+
+        if(!localCartId) return
+
+        const userCart = await prisma.cart.findFirst({
+            where: { userId},
+            include: {items: true}
+        })
+
+        await prisma.$transaction(async tx =>{
+
+        })
+}
+
+function margeCartItems(...cartItems: CartItem[][]){
+    return cartItems.reduce((acc, items) =>{
+        items.forEach((item)=>{
+            const existingItem = acc.find((i) => i.productId === item.productId)
+            if(existingItem){
+                existingItem.quantity == item.quantity;
+            }else{
+                acc.push(item)
+            }
+        })
+        return acc;
+    }, [] as CartItem[])
+}
