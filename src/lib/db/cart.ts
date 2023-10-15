@@ -88,7 +88,11 @@ export async function margeAnonymousCartIntoUserCart(userId: string) {
         })
 
         await prisma.$transaction(async tx =>{
+            if(userCart){
 
+            }else{
+
+            }
         })
 }
 
