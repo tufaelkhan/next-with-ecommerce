@@ -2,7 +2,7 @@ import { prisma } from "./prisma";
 import {cookies} "next/dist/client/components/headers"
 import {Cart, Prisma} from "@prisma/client"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServersession } from "next-auth";
+import { getServerSession } from "next-auth";
 
 export type CartWithProduct = Prisma.CartGetPayload<{
     include: {items: {include: {product: true}}}
@@ -120,6 +120,8 @@ export async function margeAnonymousCartIntoUserCart(userId: string) {
             await tx.cart.delete({
                 where: { id: localCartId.id}
             })
+            //  throw Error("test")
+            cookies().set("localCartId", "")
         })
 }
 
