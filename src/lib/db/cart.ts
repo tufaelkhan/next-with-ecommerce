@@ -94,7 +94,6 @@ export async function margeAnonymousCartIntoUserCart(userId: string) {
                 await tx.cartItem.deleteMany({
                     where: { cartId: userCart.id}
                 })
-
                 await tx.cart.update({
                     where: {id: userCart.id},
                     data: {
